@@ -1,4 +1,4 @@
-# tic-tac-toe-game-app
+# Tic Tac Toe Game App
 
 > A Vue.js project
 
