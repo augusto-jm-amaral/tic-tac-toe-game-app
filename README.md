@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+>See the server <a href="https://github.com/augusto-jm-amaral/tic-tac-toe-game-server">here</a>.
+
 ## Build Setup
 
 ``` bash
