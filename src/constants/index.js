@@ -11,6 +11,7 @@ export default {
     SEND_MESSAGE: 'SEND_MESSAGE',
     SET_NAME: 'SET_NAME',
     PLAYED: 'PLAYED',
-    DRAW: 'DRAW'
+    DRAW: 'DRAW',
+    STARTING: 'starting'
   }
 }

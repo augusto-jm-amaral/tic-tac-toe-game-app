@@ -1,11 +1,20 @@
-import * as types from './mutation-types'
+import * as types from './types'
+
+const GAME_STATE = {
+  STARTING: 'STARTING',
+  PLAYING: 'PLAYING',
+  WAITING: 'WAITING'
+}
 
 export default {
-  [types.START_GAME] (state, payload) {
+  [types.START] (state, payload) {
 
   },
-  [types.WAIT_GAME] (state, payload) {
-
+  [types.WAIT] (state, payload) {
+    state.gameState = GAME_STATE.WAITING
+  },
+  [types.PLAYERS_ONLINE] (state, { value }) {
+    state.players = value
   },
   [types.LOSE] (state, payload) {
     state.lose++
@@ -25,7 +34,7 @@ export default {
   [types.SEND_MESSAGE] (state, { message }) {
     state.messages.push(message)
   },
-  [types.SET_NAME] (state, { name }) {
+  [types.ENTER_GAME] (state, { name, socket }) {
     state.name = name
   },
   SOCKET_CONNECT (state) {

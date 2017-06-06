@@ -1,14 +1,17 @@
 /* eslint-disable */
 /* The event names socket.io can not be camelcase */
-import * as types from './mutation-types'
+import * as types from './types'
 
 export const socket_gameEvent = ({ commit }, payload) => {
   switch (payload.type) {
-    case types.START_GAME:
-      commit(types.START_GAME, payload)
+    case types.START:
+      commit(types.START, payload)
       break
-    case types.WAIT_GAME:
-      commit(types.WAIT_GAME, payload)
+    case types.WAIT:
+      commit(types.WAIT, payload)
+      break
+    case types.PLAYERS_ONLINE:
+      commit(types.PLAYERS_ONLINE, payload)
       break
   }
 }
@@ -39,6 +42,6 @@ export const sendMessage = ({ commit }, payload) => {
   commit(types.SEND_MESSAGE, payload)
 }
 
-export const setName = ({ commit }, payload) => {
-  commit(types.SET_NAME, payload)
+export const enterGame = ({ commit }, payload) => {
+  commit(types.ENTER_GAME, payload)
 }

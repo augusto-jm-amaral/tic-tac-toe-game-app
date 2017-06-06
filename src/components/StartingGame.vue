@@ -1,16 +1,17 @@
 <template>
-  <main>
+  <div class="container">
     <form v-on:submit.prevent="submitName">
         <h2>{{msg}}</h2>
         <input placeholder="Name" ref="name" required>
         <button type="submit">Let's go!</button>
-        <h3> {{playersOnline}} Players online!</h3>
+        <h3> {{playersOnline}} Players playing!</h3>
     </form>
-  </main>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Constants from '../constants'
 
 export default {
   name: 'startingGame',
@@ -26,7 +27,11 @@ export default {
   },
   methods: {
     submitName () {
-      console.log(this.$refs.name.value)
+      this.$store.dispatch('enterGame', {
+        name: this.$refs.name.value
+      })
+      this.$socket.emit(Constants.EMIT.STARTING, { name })
+      this.$router.push('/gameroom')
     }
   }
 }
