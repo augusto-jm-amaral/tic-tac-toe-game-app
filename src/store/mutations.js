@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import * as types from './types'
 
 const GAME_STATE = {
@@ -8,7 +9,13 @@ const GAME_STATE = {
 
 export default {
   [types.START] (state, payload) {
-
+    if (payload.turn) {
+      state.turn = true
+      console.log('EU INICIO')
+    } else {
+      state.turn = false
+      console.log('ELE INICIA')
+    }
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING
@@ -22,8 +29,9 @@ export default {
   [types.RECEIVE_MESSAGE] (state, payload) {
 
   },
-  [types.PLAYED] (state, payload) {
-
+  [types.PLAYED] (state, {index, socket}) {
+    Vue.set(state.board, index, `${state.letter}`)
+    state.turn = false
   },
   [types.DRAW] (state, payload) {
 

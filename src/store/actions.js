@@ -38,6 +38,10 @@ export const win = ({ commit }, payload) => {
   commit(types.WIN, payload)
 }
 
+export const played = ({ commit }, payload) => {
+  commit(types.PLAYED, payload)
+}
+
 export const sendMessage = ({ commit }, payload) => {
   commit(types.SEND_MESSAGE, payload)
 }

@@ -1,7 +1,11 @@
 <template>
-
-  <div>
-    <header>
+  <div class="container">
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <Board></Board>
+      </div>
+    </div>
+<!--     <header>
       <nav>
         <div class="brand">
           <img src="../assets/logo.png" width="30" height="30"> 
@@ -12,24 +16,29 @@
           <li>Players Online {{playersOnline}}</li>
         </ul>  
       </nav>
-    </header>
-    <main>
-    </main>
-    <footer>
+    </header> -->
+<!--     <main>
+    </main> -->
+<!--     <footer>
       @Augusto 2017
-    </footer>
+    </footer> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Board from './Board.vue'
 
 export default {
   name: 'gameRoom',
+
   data () {
     return {
 
     }
+  },
+  components: {
+    Board
   },
   computed: {
     ...mapGetters({

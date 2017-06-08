@@ -10,12 +10,15 @@ const state = {
   name: null,
   messages: [],
   gameState: 'STARTING',
-  letter: null,
+  // letter: null,
+  letter: 'X',
   wins: 0,
   lose: 0,
   players: null,
   adversaryName: null,
-  isConnected: false
+  isConnected: false,
+  turn: false,
+  board: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
 export default new Vuex.Store({
