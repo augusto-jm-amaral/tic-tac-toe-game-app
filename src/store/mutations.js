@@ -11,14 +11,25 @@ export default {
   [types.START] (state, payload) {
     if (payload.turn) {
       state.turn = true
-      console.log('EU INICIO')
+      state.messages.push({
+        sender: 'Game',
+        message: 'Starting the game, you start!'
+      })
     } else {
       state.turn = false
-      console.log('ELE INICIA')
+      state.messages.push({
+        sender: 'Game',
+        message: 'Starting the game, Your opponent starts!'
+      })
     }
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING
+
+    state.messages.push({
+      sender: 'Game',
+      message: 'Waiting other player...'
+    })
   },
   [types.PLAYERS_ONLINE] (state, { value }) {
     state.players = value

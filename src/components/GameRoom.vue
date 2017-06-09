@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s6 offset-s1">
         <Board></Board>
+      </div>
+      <div class="col s4 offset-s1">
+        <Chat></Chat>
       </div>
     </div>
 <!--     <header>
@@ -28,6 +31,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Board from './Board.vue'
+import Chat from './Chat.vue'
 
 export default {
   name: 'gameRoom',
@@ -38,7 +42,8 @@ export default {
     }
   },
   components: {
-    Board
+    Board,
+    Chat
   },
   computed: {
     ...mapGetters({
