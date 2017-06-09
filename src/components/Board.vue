@@ -3,7 +3,7 @@
     <div v-for="(item, index) of board" class="col s4">
       <div @click="played(index)" class="card waves-effect waves-teal scale-transition ">
         <div class="card-content black-text">
-          <h1>{{item}}</h1>
+          {{item}}
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .card {
-    width: 100%;
-    height: 9vw;
+    width: 100px;
+    height: 100px;
 
     h1 {
       text-align: center;

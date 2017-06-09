@@ -1,20 +1,12 @@
 <template>
   <div class="container">
-
     <div class="row">
       <div class="col s12 m6 offset-m3">
         <div class="card">
-  <!--         <div class="card-header">
-          </div> -->
           <div class="card-content white-text teal">
             <h4 class="title">{{msg}}</h4>
-            <!-- <span class="card-title">Card Title</span> -->
-  <!--           <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p> -->
           </div>
           <div class="card-action">
-  <!--           <a href="#">This is a link</a>
-            <a href="#">This is a link</a> -->
             <form class="row" v-on:submit.prevent="submitName">
               <div class="col s12">
               </div>
@@ -33,13 +25,11 @@
                   {{playersOnline}} Players playing!
                 </h5>
               </div>
-                <!-- <button type="submit">Let's go!</button> -->
             </form>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -51,7 +41,7 @@ export default {
   name: 'startingGame',
   data () {
     return {
-      msg: 'Welcome to Tic-Tac-Toe in Vue.js'
+      msg: 'Welcome to Tic-Tac-Toe'
     }
   },
   computed: {

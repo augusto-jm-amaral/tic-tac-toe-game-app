@@ -29,31 +29,25 @@ export default {
   ]),
   watch: {
     messages (val) {
-      // $(this.$refs.chatBody).scrollTo('100%')
-      this.$refs.chatBody.scrollTop = this.$refs.chatBody.scrollHeight + 20
-      // console.log(this.$refs.chatBody.childNodes)
+      setTimeout(() => {
+        this.$refs.chatBody.scrollTop = (this.$refs.chatBody.scrollHeight - this.$refs.chatBody.clientHeight)
+      }, 500)
     }
   }
-  // methods: {
-  //   played (index) {
-  //     if (this.turn) {
-  //       this.$store.dispatch('played', {
-  //         socket: this.$socket,
-  //         index
-  //       })
-  //     }
-  //   }
-  // }
 }
 </script>
 <style lang="scss" scoped>
+
+
 .card {
-  height: 29.2vw;
+  min-height: 340px;
+  max-height: 340px;
   
   .card-action {
     position: relative;
-    height: 24vw;
     overflow-y: scroll;
+    min-height: 250px;
+    max-height: 250px;
     p {
       span {
         font-weight: 700;

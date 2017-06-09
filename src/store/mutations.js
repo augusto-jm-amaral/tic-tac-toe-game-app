@@ -15,12 +15,14 @@ export default {
         sender: 'Game',
         message: 'Starting the game, you start!'
       })
+      state.letter = 'X'
     } else {
       state.turn = false
       state.messages.push({
         sender: 'Game',
         message: 'Starting the game, Your opponent starts!'
       })
+      state.letter = 'O'
     }
   },
   [types.WAIT] (state, payload) {
