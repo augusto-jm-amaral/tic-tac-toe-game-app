@@ -7,6 +7,11 @@ const GAME_STATE = {
   WAITING: 'WAITING'
 }
 
+const EVENTS_EMIT = {
+  PLAYER: 'playerEvent',
+  GAME: 'gameEvent'
+}
+
 export default {
   [types.START] (state, payload) {
     if (payload.turn) {
@@ -28,6 +33,7 @@ export default {
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING
+    state.turn = false
 
     state.messages.push({
       sender: 'Game',
@@ -40,21 +46,39 @@ export default {
   [types.LOSE] (state, payload) {
     state.lose++
   },
-  [types.RECEIVE_MESSAGE] (state, payload) {
+  // [types.RECEIVE_MESSAGE] (state, payload) {
 
-  },
+  // },
   [types.PLAYED] (state, {index, socket}) {
     Vue.set(state.board, index, `${state.letter}`)
     state.turn = false
+    let letter = state.letter
+    socket.emit(EVENTS_EMIT.PLAYER, {
+      type: types.DRAW,
+      letter,
+      index
+    })
   },
-  [types.DRAW] (state, payload) {
-
+  [types.DRAW] (state, {index, letter}) {
+    Vue.set(state.board, index, letter)
+    state.turn = true
   },
   [types.WIN] (state, payload) {
     state.wins++
   },
-  [types.SEND_MESSAGE] (state, { message }) {
-    state.messages.push(message)
+  [types.SEND_MESSAGE] (state, { message, socket, sender }) {
+    state.messages.push({
+      sender,
+      message
+    })
+
+    if (socket) {
+      socket.emit(EVENTS_EMIT.PLAYER, {
+        type: types.SEND_MESSAGE,
+        name,
+        message
+      })
+    }
   },
   [types.ENTER_GAME] (state, { name, socket }) {
     state.name = name

@@ -1,13 +1,9 @@
 <template>
   <div class="row">
     <form class="col input-field s12">
-<!--       <div class="row">
-        <div class="input-field col s6"> -->
-          <i class="material-icons prefix">mode_edit</i>
-          <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-          <label for="icon_prefix2">First Name</label>
-<!--         </div>
-      </div> -->
+      <i class="material-icons prefix">mode_edit</i>
+      <textarea ref="textMessage" id="icon_prefix2" class="materialize-textarea" @keyup.enter="sendMessage"></textarea>
+      <label for="icon_prefix2">Message</label>
     </form>
   </div>
 </template>
@@ -23,8 +19,19 @@ export default {
     }
   },
   computed: mapState([
-    'gameState'
-  ])
+    'name'
+  ]),
+  methods: {
+    sendMessage () {
+      let message = this.$refs.textMessage.value
+      this.$store.dispatch('sendMessage', {
+        sender: this.name,
+        socket: this.$socket,
+        message
+      })
+      this.$refs.textMessage.value = ''
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

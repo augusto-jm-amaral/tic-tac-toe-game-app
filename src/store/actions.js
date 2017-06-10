@@ -22,8 +22,8 @@ export const socket_playerEvent = ({ commit }, payload) => {
     case types.LOSE:
       commit(types.LOSE, payload)
       break
-    case types.RECEIVE_MESSAGE:
-      commit(types.RECEIVE_MESSAGE, payload)
+    case types.SEND_MESSAGE:
+      commit(types.SEND_MESSAGE, payload)
       break
     case types.PLAYED:
       commit(types.PLAYED, payload)
