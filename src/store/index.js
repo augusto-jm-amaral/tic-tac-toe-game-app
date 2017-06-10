@@ -12,7 +12,7 @@ const state = {
   gameState: 'STARTING',
   letter: null,
   wins: 0,
-  lose: 0,
+  loses: 0,
   players: null,
   adversaryName: null,
   isConnected: false,

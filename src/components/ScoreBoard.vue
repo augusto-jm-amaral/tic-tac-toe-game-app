@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col s12">
       <div class="card">
-        <div class="card-content white-text" v-bind:class="">
-          Your Turn
+        <div class="card-content white-text" v-bind:class="getColorBoardState">
+          {{getStateMessage}}
         </div>
         <div class="card-action">
-          <span>1</span>
+          <span>{{wins}}</span>
           <span>you x opponent</span>
-          <span>0</span>
+          <span>{{loses}}</span>
         </div>
       </div>
     </div>
@@ -17,24 +17,52 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'scoreBoard',
   data () {
     return {
-      blue: true,
-      red: false,
-      green: false
     }
   },
-  computed: mapState([
-    'turn'
-  ])
+  computed: {
+    ...mapState([
+      'turn',
+      'wins',
+      'loses'
+    ]),
+    ...mapGetters([
+      'getStateMessage',
+      'getColorBoardState'
+    ])
+  }
 }
 </script>
 <style lang="scss" scoped>
   .col {
     padding: 0 0;
+
+    .card-content{
+      font-weight: 700;
+      font-size: 1.5em;
+    }
+
+    .card-action {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span{
+        &:first-child{
+          font-size: 2em;
+
+        }
+
+        &:last-child{
+          font-size: 2em;
+        }
+      }
+    }
   }
 </style>

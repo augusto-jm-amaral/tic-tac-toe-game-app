@@ -24,6 +24,7 @@ export default {
       })
       state.letter = 'O'
     }
+    state.gameState = GAME_STATE.PLAYING
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING

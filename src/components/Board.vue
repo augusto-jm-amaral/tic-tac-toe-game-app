@@ -37,13 +37,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .card {
-    width: 100px;
-    height: 100px;
+  .col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    h1 {
-      text-align: center;
-      font-weight: 700;
+    .card {
+      width: 100px;
+      height: 100px;
+
+      h1 {
+        text-align: center;
+        font-weight: 700;
+      }
     }
+    
   }
 </style>
