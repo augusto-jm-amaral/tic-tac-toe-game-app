@@ -1,5 +1,7 @@
 # Tic Tac Toe Game App
 
+![Completion: 80%](https://img.shields.io/badge/completion-80%25-green.svg)
+
 > A Vue.js project
 
 >See the server <a href="https://github.com/augusto-jm-amaral/tic-tac-toe-game-server">here</a>.
