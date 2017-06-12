@@ -2,18 +2,24 @@
   <div class="container">
     <div class="row">
       <div class="col s6 offset-s1">
-        <Board></Board>
+        <div class="row">
+          <div class="col s12">
+            <ScoreBoard></ScoreBoard>
+          </div>
+          <div class="col s12">
+            <Board></Board>
+          </div>
+        </div>
       </div>
       <div class="col s4 offset-s1">
-        <Chat></Chat>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s6 offset-s1">
-        <SendMessage></SendMessage>
-      </div>
-      <div class="col s4 offset-s1">
-        <ScoreBoard></ScoreBoard>
+        <div class="row">
+          <div class="col s12">
+            <Chat></Chat>
+          </div>
+          <div class="col s12">
+            <SendMessage></SendMessage>
+          </div>
+        </div>
       </div>
     </div>
   </div>

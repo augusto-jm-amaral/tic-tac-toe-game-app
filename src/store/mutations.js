@@ -46,13 +46,13 @@ export default {
   [types.LOSE] (state, payload) {
     state.lose++
   },
-  // [types.RECEIVE_MESSAGE] (state, payload) {
-
-  // },
   [types.PLAYED] (state, {index, socket}) {
     Vue.set(state.board, index, `${state.letter}`)
     state.turn = false
     let letter = state.letter
+
+    verifyGameOver(state.board);
+
     socket.emit(EVENTS_EMIT.PLAYER, {
       type: types.DRAW,
       letter,
@@ -89,4 +89,27 @@ export default {
   SOCKET_DISCONNECT (state) {
     state.isConnected = false
   }
+}
+
+verifyGameOver (board) {
+  let matches = ['XXX', 'OOO'];
+
+  rows = [
+    board[0] + board[1] + board[2],
+    board[3] + board[4] + board[5],
+    board[6] + board[7] + board[8],
+    board[0] + board[4] + board[8],
+    board[2] + board[4] + board[6],
+    board[0] + board[3] + board[6],
+    board[1] + board[4] + board[7],
+    board[2] + board[5] + board[8]
+  ];
+
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i] === matches[0] || rows[i] === matches[1]) {
+        return true;
+    }
+  }
+
+  return false;
 }

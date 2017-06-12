@@ -40,14 +40,13 @@ export default {
 
 
 .card {
-  min-height: 340px;
-  max-height: 340px;
+  min-height: 30vw;
   
   .card-action {
     position: relative;
     overflow-y: scroll;
-    min-height: 250px;
-    max-height: 250px;
+    min-height: 24.5vw;
+    max-height: 24.5vw;
     p {
       span {
         font-weight: 700;
