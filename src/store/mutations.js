@@ -30,6 +30,7 @@ export default {
       state.letter = 'O'
     }
     state.gameState = GAME_STATE.PLAYING
+    state.board = new Array(9)
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING
@@ -46,25 +47,45 @@ export default {
   [types.LOSE] (state, payload) {
     state.lose++
   },
-  [types.PLAYED] (state, {index, socket}) {
-    Vue.set(state.board, index, `${state.letter}`)
+  [types.PLAYED] (state, { index, socket, commit }) {
     state.turn = false
+    Vue.set(state.board, index, `${state.letter}`)
+    state.plays++
     let letter = state.letter
-
-    verifyGameOver(state.board);
 
     socket.emit(EVENTS_EMIT.PLAYER, {
       type: types.DRAW,
       letter,
       index
     })
+
+    if (verifyGameOver(state.board)) {
+      commit(types.WIN, {})
+    } else {
+      if (verifyATie(state.plays)) {
+        commit(types.A_TIE, {})
+      }
+    }
   },
-  [types.DRAW] (state, {index, letter}) {
+  [types.DRAW] (state, {index, letter, commit}) {
     Vue.set(state.board, index, letter)
-    state.turn = true
+    state.plays++
+
+    if (verifyGameOver(state.board)) {
+      commit(types.LOSE, {})
+    } else {
+      if (verifyATie(state.plays)) {
+        commit(types.A_TIE, {})
+      } else {
+        state.turn = true
+      }
+    }
   },
   [types.WIN] (state, payload) {
     state.wins++
+  },
+  [types.LOSE] (state, payload) {
+    state.losses++
   },
   [types.SEND_MESSAGE] (state, { message, socket, sender }) {
     state.messages.push({
@@ -91,10 +112,14 @@ export default {
   }
 }
 
-verifyGameOver (board) {
-  let matches = ['XXX', 'OOO'];
+function verifyATie (plays) {
+  return plays >= 9
+}
 
-  rows = [
+function verifyGameOver (board) {
+  let matches = ['XXX', 'OOO']
+
+  let rows = [
     board[0] + board[1] + board[2],
     board[3] + board[4] + board[5],
     board[6] + board[7] + board[8],
@@ -103,13 +128,12 @@ verifyGameOver (board) {
     board[0] + board[3] + board[6],
     board[1] + board[4] + board[7],
     board[2] + board[5] + board[8]
-  ];
+  ]
 
   for (var i = 0; i < rows.length; i++) {
     if (rows[i] === matches[0] || rows[i] === matches[1]) {
-        return true;
+      return true
     }
   }
-
-  return false;
+  return false
 }

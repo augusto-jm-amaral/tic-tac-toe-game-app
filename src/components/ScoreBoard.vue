@@ -8,7 +8,7 @@
         <div class="card-action">
           <span>{{wins}}</span>
           <span>you x opponent</span>
-          <span>{{loses}}</span>
+          <span>{{losses}}</span>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@ export default {
     ...mapState([
       'turn',
       'wins',
-      'loses'
+      'losses'
     ]),
     ...mapGetters([
       'getStateMessage',

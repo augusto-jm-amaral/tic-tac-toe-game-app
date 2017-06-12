@@ -12,12 +12,13 @@ const state = {
   gameState: 'STARTING',
   letter: null,
   wins: 0,
-  loses: 0,
+  losses: 0,
   players: null,
   adversaryName: null,
   isConnected: false,
   turn: false,
-  board: new Array(9)
+  board: new Array(9),
+  plays: 0
 }
 
 export default new Vuex.Store({

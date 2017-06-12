@@ -31,6 +31,7 @@ export default {
       if (this.turn) {
         this.$store.dispatch('played', {
           socket: this.$socket,
+          dispatch: this.$store.dispatch,
           index
         })
       }
