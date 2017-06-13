@@ -15,14 +15,12 @@ const EVENTS_EMIT = {
 export default {
   [types.START] (state, payload) {
     if (payload.turn) {
-      state.turn = true
       state.messages.push({
         sender: 'Game',
         message: 'Starting the game, you start!'
       })
       state.letter = 'X'
     } else {
-      state.turn = false
       state.messages.push({
         sender: 'Game',
         message: 'Starting the game, Your opponent starts!'
@@ -30,7 +28,7 @@ export default {
       state.letter = 'O'
     }
     state.gameState = GAME_STATE.PLAYING
-    state.board = new Array(9)
+    payload.commit(types.NEW_GAME, {turn: payload.turn})
   },
   [types.WAIT] (state, payload) {
     state.gameState = GAME_STATE.WAITING
@@ -44,8 +42,62 @@ export default {
   [types.PLAYERS_ONLINE] (state, { value }) {
     state.players = value
   },
-  [types.LOSE] (state, payload) {
-    state.lose++
+  [types.NEW_GAME] (state, payload) {
+    console.log('new game')
+
+    if (payload.hasOwnProperty('turn')) {
+      state.turn = payload.turn
+    }
+
+    Vue.set(state, 'board', new Array(9))
+  },
+  [types.WIN] (state, { commit }) {
+    state.wins++
+
+    state.messages.push({
+      sender: 'Game',
+      message: 'You win!'
+    })
+
+    state.messages.push({
+      sender: 'Game',
+      message: 'A new game will start again in a moment...'
+    })
+
+    setTimeout(() => {
+      commit(types.NEW_GAME, { turn: false })
+    }, 3000)
+  },
+  [types.LOSE] (state, { commit }) {
+    state.losses++
+
+    state.messages.push({
+      sender: 'Game',
+      message: 'You lost try again!'
+    })
+    state.messages.push({
+      sender: 'Game',
+      message: 'A new game will start again in a moment...'
+    })
+
+    setTimeout(() => {
+      commit(types.NEW_GAME, { turn: true })
+    }, 3000)
+  },
+  [types.A_TIE] (state, { commit }) {
+    state.messages.push({
+      sender: 'Game',
+      message: 'There was a draw!'
+    })
+
+    state.messages.push({
+      sender: 'Game',
+      message: 'A new game will start again in a moment...'
+    })
+
+    setTimeout(() => {
+      commit(types.NEW_GAME, { })
+    }, 3000)
   },
   [types.PLAYED] (state, { index, socket, commit }) {
     state.turn = false
@@ -60,32 +112,25 @@ export default {
     })
 
     if (verifyGameOver(state.board)) {
-      commit(types.WIN, {})
+      commit(types.WIN, { commit })
     } else {
       if (verifyATie(state.plays)) {
-        commit(types.A_TIE, {})
+        commit(types.A_TIE, { commit })
       }
     }
   },
   [types.DRAW] (state, {index, letter, commit}) {
     Vue.set(state.board, index, letter)
     state.plays++
+    state.turn = true
 
     if (verifyGameOver(state.board)) {
-      commit(types.LOSE, {})
+      commit(types.LOSE, { commit })
     } else {
       if (verifyATie(state.plays)) {
-        commit(types.A_TIE, {})
-      } else {
-        state.turn = true
+        commit(types.A_TIE, { commit })
       }
     }
-  },
-  [types.WIN] (state, payload) {
-    state.wins++
-  },
-  [types.LOSE] (state, payload) {
-    state.losses++
   },
   [types.SEND_MESSAGE] (state, { message, socket, sender }) {
     state.messages.push({
@@ -101,8 +146,10 @@ export default {
       })
     }
   },
-  [types.ENTER_GAME] (state, { name, socket }) {
+  [types.ENTER_GAME] (state, { name, socket, router }) {
     state.name = name
+    socket.emit('starting', { name })
+    router.push('/gameroom')
   },
   SOCKET_CONNECT (state) {
     state.isConnected = true

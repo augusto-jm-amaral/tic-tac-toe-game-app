@@ -5,13 +5,13 @@ import * as types from './types'
 export const socket_gameEvent = ({ commit }, payload) => {
   switch (payload.type) {
     case types.START:
-      commit(types.START, payload)
+      commit(types.START, { commit, ...payload})
       break
     case types.WAIT:
-      commit(types.WAIT, payload)
+      commit(types.WAIT, { commit, ...payload})
       break
     case types.PLAYERS_ONLINE:
-      commit(types.PLAYERS_ONLINE, payload)
+      commit(types.PLAYERS_ONLINE, { commit, ...payload})
       break
   }
 }
@@ -35,15 +35,15 @@ export const socket_playerEvent = ({ commit }, payload) => {
 }
 
 export const win = ({ commit }, payload) => {
-  commit(types.WIN, payload)
+  commit(types.WIN, { commit, ...payload})
 }
 
 export const lose = ({ commit }, payload) => {
-  commit(types.ENTER_GAME, payload)
+  commit(types.ENTER_GAME, { commit, ...payload})
 }
 
 export const played = ({ commit }, payload) => {
-  commit(types.PLAYED, payload)
+  commit(types.PLAYED, { commit, ...payload })
 }
 
 export const sendMessage = ({ commit }, payload) => {

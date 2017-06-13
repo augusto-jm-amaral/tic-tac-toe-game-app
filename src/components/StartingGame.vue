@@ -35,7 +35,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Constants from '../constants'
+// import Constants from '../constants'
 
 export default {
   name: 'startingGame',
@@ -52,10 +52,12 @@ export default {
   methods: {
     submitName () {
       this.$store.dispatch('enterGame', {
-        name: this.$refs.name.value
+        name: this.$refs.name.value,
+        socket: this.$socket,
+        router: this.$router
       })
-      this.$socket.emit(Constants.EMIT.STARTING, { name })
-      this.$router.push('/gameroom')
+      // this.$socket.emit(Constants.EMIT.STARTING, { name })
+      // this.$router.push('/gameroom')
     }
   }
 }
