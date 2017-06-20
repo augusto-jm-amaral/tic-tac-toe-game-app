@@ -15,6 +15,10 @@ Vue.use(VueSocketIO, io('http://localhost:3000', {transports: ['websocket'], upg
 
 sync(store, router)
 
+// router.beforeEach((to, from, next) => {
+//   console.log(router.app)
+// })
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
