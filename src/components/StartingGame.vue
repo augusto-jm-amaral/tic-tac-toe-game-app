@@ -4,7 +4,7 @@
       <div class="col s12 m6 offset-m3">
         <div class="card">
           <div class="card-content white-text teal">
-            <h4 class="title">{{msg}}</h4>
+            <h4 class="title">Welcome to Tic-Tac-Toe</h4>
           </div>
           <div class="card-action">
             <form class="row" v-on:submit.prevent="submitName">
@@ -35,13 +35,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Constants from '../constants'
 
 export default {
   name: 'startingGame',
   data () {
     return {
-      msg: 'Welcome to Tic-Tac-Toe'
     }
   },
   computed: {
@@ -56,14 +54,11 @@ export default {
         socket: this.$socket,
         router: this.$router
       })
-      // this.$socket.emit(Constants.EMIT.STARTING, { name })
-      // this.$router.push('/gameroom')
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   .container {
     margin-top: 10vh;

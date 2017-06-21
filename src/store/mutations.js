@@ -12,42 +12,39 @@ export default {
   [types.A_TIE]: aTie,
   [types.PLAYED]: played,
   [types.DRAW]: draw,
-  [types.SEND_MESSAGE]: sendMessage,
-  [types.ENTER_GAME]: enterGame,
-  SOCKET_CONNECT (state) {
-    state.isConnected = true
+  [types.SET_PLAYERNAME] (state, { name }) {
+    state.name = name
   },
-  SOCKET_DISCONNECT (state) {
-    state.isConnected = false
+  [types.ADD_MESSAGE]: addMessage,
+  [types.SET_GAMESTATE] (state, { gameState, message }) {
+    state.gameState = gameState
+    state.gameStateMessage = message
   }
+  // SOCKET_CONNECT: onSocketConnect,
+  // SOCKET_DISCONNECT: onSocketDisconnect
 }
-
-let verifyATie = (plays) => {
-  return plays >= 9
-}
-
-let verifyGameOver = (board) => {
-  let matches = ['XXX', 'OOO']
-
-  let rows = [
-    board[0] + board[1] + board[2],
-    board[3] + board[4] + board[5],
-    board[6] + board[7] + board[8],
-    board[0] + board[4] + board[8],
-    board[2] + board[4] + board[6],
-    board[0] + board[3] + board[6],
-    board[1] + board[4] + board[7],
-    board[2] + board[5] + board[8]
-  ]
-
-  for (var i = 0; i < rows.length; i++) {
-    if (rows[i] === matches[0] || rows[i] === matches[1]) {
-      return true
-    }
-  }
-  return false
-}
-
+// let verifyATie = (plays) => {
+//   return plays >= 9
+// }
+// let verifyGameOver = (board) => {
+//   let matches = ['XXX', 'OOO']
+//   let rows = [
+//     board[0] + board[1] + board[2],
+//     board[3] + board[4] + board[5],
+//     board[6] + board[7] + board[8],
+//     board[0] + board[4] + board[8],
+//     board[2] + board[4] + board[6],
+//     board[0] + board[3] + board[6],
+//     board[1] + board[4] + board[7],
+//     board[2] + board[5] + board[8]
+//   ]
+//   for (var i = 0; i < rows.length; i++) {
+//     if (rows[i] === matches[0] || rows[i] === matches[1]) {
+//       return true
+//     }
+//   }
+//   return false
+// }
 let startGame = (state, payload) => {
   if (payload.turn) {
     state.messages.push({
@@ -70,10 +67,10 @@ let waitGame = (state, payload) => {
   state.gameState = Constants.GAME_STATE.WAITING
   state.turn = false
 
-  state.messages.push({
-    sender: 'Game',
-    message: 'Waiting other player...'
-  })
+  // state.messages.push({
+  //   sender: 'Game',
+  //   message: 'Waiting other player...'
+  // })
 }
 
 let playerOnline = (state, { value }) => {
@@ -81,7 +78,7 @@ let playerOnline = (state, { value }) => {
 }
 
 let newGame = (state, payload) => {
-  console.log('new game')
+  console.log('EVENT: New Game')
 
   if (payload.hasOwnProperty('turn')) {
     state.turn = payload.turn
@@ -140,13 +137,13 @@ let played = (state, { index, socket, commit }) => {
     index
   })
 
-  if (verifyGameOver(state.board)) {
-    commit(types.WIN, { commit })
-  } else {
-    if (verifyATie(state.plays)) {
-      commit(types.A_TIE, { commit })
-    }
-  }
+  // if (verifyGameOver(state.board)) {
+  //   commit(types.WIN, { commit })
+  // } else {
+  //   // if (verifyATie(state.plays)) {
+  //   //   commit(types.A_TIE, { commit })
+  //   // }
+  // }
 }
 
 let draw = (state, {index, letter, commit}) => {
@@ -154,32 +151,36 @@ let draw = (state, {index, letter, commit}) => {
   state.plays++
   state.turn = true
 
-  if (verifyGameOver(state.board)) {
-    commit(types.LOSE, { commit })
-  } else {
-    if (verifyATie(state.plays)) {
-      commit(types.A_TIE, { commit })
-    }
-  }
+  // if (verifyGameOver(state.board)) {
+  //   commit(types.LOSE, { commit })
+  // } else {
+  //   if (verifyATie(state.plays)) {
+  //     commit(types.A_TIE, { commit })
+  //   }
+  // }
 }
 
-let sendMessage = (state, { message, socket, sender }) => {
+// let sendMessage = (state, { message, socket, sender }) => {
+//     socket.emit(Constants.EVENTS_EMIT.PLAYER, {
+//       type: types.SEND_MESSAGE,
+//       name,
+//       message
+//     })
+//   // state.messages.push({
+//   //   sender,
+//   //   message
+//   // })
+// }
+
+let addMessage = (state, { message, sender }) => {
   state.messages.push({
     sender,
     message
   })
-
-  if (socket) {
-    socket.emit(Constants.EVENTS_EMIT.PLAYER, {
-      type: types.SEND_MESSAGE,
-      name,
-      message
-    })
-  }
 }
-
-let enterGame = (state, { name, socket, router }) => {
-  state.name = name
-  socket.emit('starting', { name })
-  router.push('/gameroom')
-}
+// let onSocketConnect = (state) => {
+//   state.isConnected = true
+// }
+// let onSocketDisconnect = (state) => {
+//   state.isConnected = false
+// }

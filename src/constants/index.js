@@ -24,5 +24,10 @@ export default {
     STARTING: 'STARTING',
     PLAYING: 'PLAYING',
     WAITING: 'WAITING'
+  },
+
+  /* Game messages */
+  MESSAGES: {
+    STARTING_GAME: 'Starting the game'
   }
 }
