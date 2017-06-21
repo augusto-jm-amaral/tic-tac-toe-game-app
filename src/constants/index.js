@@ -13,5 +13,16 @@ export default {
     PLAYED: 'PLAYED',
     DRAW: 'DRAW',
     STARTING: 'starting'
+  },
+  /* emit channel names  */
+  EVENTS_EMIT: {
+    PLAYER: 'playerEvent',
+    GAME: 'gameEvent'
+  },
+  /* state the game */
+  GAME_STATE: {
+    STARTING: 'STARTING',
+    PLAYING: 'PLAYING',
+    WAITING: 'WAITING'
   }
 }
